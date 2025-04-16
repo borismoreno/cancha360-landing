@@ -1,0 +1,15 @@
+---
+// src/components/Footer.astro
+const currentYear = new Date().getFullYear();
+---
+<footer class="bg-gray-800 text-gray-400 py-8 text-center">
+    <div class="container mx-auto px-6">
+        <img src="/images/logo-white.svg" alt="Cancha360 Logo Blanco" class="h-8 mx-auto mb-4"/> {/* Asegúrate de tener un logo blanco */}
+        <nav class="flex justify-center space-x-4 mb-4">
+            <a href="/politica-privacidad" class="hover:text-white">Política de Privacidad</a>
+            <a href="/terminos-condiciones" class="hover:text-white">Términos y Condiciones</a>
+            {/* <a href="#contacto" class="hover:text-white">Contacto</a> */}
+        </nav>
+        <p>© {currentYear} Cancha360. Todos los derechos reservados. Hecho con ❤️ en Ecuador 🇪🇨.</p>
+    </div>
+</footer>

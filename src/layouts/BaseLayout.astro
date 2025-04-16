@@ -1,0 +1,139 @@
+---
+// src/layouts/BaseLayout.astro
+import { ViewTransitions } from 'astro:transitions'; // Opcional para transiciones suaves
+import { Toaster } from 'react-hot-toast'; // Importar componente Toast
+
+interface Props {
+    title?: string;
+    description?: string;
+    ogImage?: string; // URL absoluta de la imagen para OG
+}
+
+const {
+    title = 'Cancha360 | La App Definitiva para Fútbol Amateur en Ecuador',
+    description = 'Organiza partidos, encuentra equipos, sigue estadísticas y vive tu pasión por el fútbol amateur con Cancha360. ¡Regístrate gratis!',
+    ogImage = new URL('/images/cancha360-og-image.webp', Astro.site).toString() // Imagen por defecto para redes sociales
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Datos Schema.org
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Cancha360",
+  "url": Astro.site,
+  "logo": new URL('/images/logo.svg', Astro.site).toString(), // Asegúrate que exista el logo
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "EC",
+    "addressLocality": "Quito", // O la ciudad principal
+    "postalCode": "170101" // Ejemplo
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Customer Service",
+    "email": "info@cancha360.com" // Email de contacto
+  }
+};
+
+const webApplicationSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Cancha360 App",
+  "applicationCategory": "SportsApplication",
+  "operatingSystem": "iOS, Android", // Sistemas operativos soportados
+  "offers": {
+    "@type": "Offer",
+    "price": "0", // Si el plan inicial es gratis
+    "priceCurrency": "USD"
+  },
+  "browserRequirements": "Requires HTML5 capable browser.", // Opcional
+  "description": description,
+  "screenshot": new URL('/images/cancha360-screenshot.webp', Astro.site).toString(), // Captura de pantalla de la app
+  "aggregateRating": { // Opcional, si tienes ratings
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "150" // Ejemplo
+  }
+};
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {/* <!-- SEO Meta Tags --> */}
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL.toString()} />
+
+    {/* <!-- Open Graph / Facebook --> */}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL.toString()} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Interfaz de la aplicación Cancha360" />
+    <meta property="og:locale" content="es_EC" />
+    <meta property="og:site_name" content="Cancha360" />
+
+    {/* <!-- Twitter --> */}
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL.toString()} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+    <meta property="twitter:image:alt" content="Interfaz de la aplicación Cancha360" />
+    {/* <!-- <meta property="twitter:site" content="@cancha360ec"> --> {/* Si tienes cuenta de Twitter */}
+
+    {/* <!-- Favicon --> */}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> {/* Asegúrate de tener un favicon */}
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png"/> {/* Ícono para Apple */}
+
+    {/* <!-- Schema.org Markup --> */}
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(webApplicationSchema)} />
+
+    {/* <!-- Opcional: View Transitions para navegación suave si tienes más páginas --> */}
+    {/* <ViewTransitions /> */}
+
+    {/* <!-- Astro gestiona los estilos (Tailwind y critical CSS inline) --> */}
+    <slot name="head" />
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+    {/* <!-- El Toaster debe renderizarse en el layout para estar siempre presente --> */}
+    <Toaster position="bottom-center" reverseOrder={false} />
+    <slot /> {/* <!-- Aquí se insertará el contenido de la página (index.astro) --> */}
+    <script>
+        // Simple script para lazy loading de videos si es necesario (puede no ser requerido si usas atributos nativos)
+        document.addEventListener("DOMContentLoaded", function() {
+          const lazyVideos = [].slice.call(document.querySelectorAll("video.lazy"));
+
+          if ("IntersectionObserver" in window) {
+            let lazyVideoObserver = new IntersectionObserver(function(entries, observer) {
+              entries.forEach(function(video) {
+                if (video.isIntersecting) {
+                  for (var source in video.target.children) {
+                    var videoSource = video.target.children[source];
+                    if (typeof videoSource.tagName === "string" && videoSource.tagName === "SOURCE") {
+                      (videoSource as HTMLSourceElement).src = (videoSource as HTMLSourceElement).dataset.src!;
+                    }
+                  }
+
+                  (video.target as HTMLVideoElement).load();
+                  video.target.classList.remove("lazy");
+                  lazyVideoObserver.unobserve(video.target);
+                }
+              });
+            });
+
+            lazyVideos.forEach(function(lazyVideo) {
+              lazyVideoObserver.observe(lazyVideo);
+            });
+          }
+        });
+    </script>
+</body>
+</html>

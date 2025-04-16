@@ -1,0 +1,32 @@
+---
+// src/components/FAQ.astro
+const faqs = [
+  { q: "¿Cancha360 tiene costo?", a: "Ofrecemos un plan gratuito con funciones esenciales. También tendremos planes premium con características avanzadas para equipos y ligas." },
+  { q: "¿En qué ciudades de Ecuador está disponible?", a: "Actualmente estamos enfocados en Quito y Guayaquil, pero planeamos expandirnos a nivel nacional pronto. ¡Regístrate para recibir noticias!" },
+  { q: "¿Puedo gestionar mi liga completa aquí?", a: "Sí, estamos desarrollando funciones específicas para la administración de ligas, incluyendo tablas de posiciones, calendarios y gestión de árbitros." },
+  { q: "¿Cómo se protegen mis datos?", a: "Nos tomamos la privacidad muy en serio. Tus datos están seguros y solo se usan para mejorar tu experiencia en la app, siguiendo las normativas vigentes." },
+];
+---
+<section class="py-16 lg:py-24 bg-gray-50">
+    <div class="container mx-auto px-6 max-w-3xl">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Preguntas Frecuentes</h2>
+        <div class="space-y-4">
+            {faqs.map((faq, index) => (
+                <details class="bg-white p-4 rounded-lg shadow-sm group" name="faq">
+                    <summary class="font-semibold cursor-pointer list-none flex justify-between items-center group-open:text-green-600">
+                        {faq.q}
+                        <span class="text-green-500 transform transition-transform duration-200 group-open:rotate-45">+</span>
+                    </summary>
+                    <div class="mt-4 text-gray-600">
+                        {faq.a}
+                    </div>
+                </details>
+            ))}
+        </div>
+    </div>
+     {/* Estilos para el icono + (puedes mejorar esto) */}
+     <style>
+        details summary::-webkit-details-marker { display: none; } /* Oculta marcador por defecto en Chrome */
+        details > summary { list-style: none; } /* Oculta marcador por defecto en Firefox */
+     </style>
+</section>

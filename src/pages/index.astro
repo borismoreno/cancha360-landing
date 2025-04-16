@@ -1,0 +1,31 @@
+---
+// src/pages/index.astro
+import '../styles/global.css'; // Asegúrate de tener un archivo CSS global
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Benefits from '../components/Benefits.astro';
+import DemoSection from '../components/DemoSection.astro';
+import Testimonials from '../components/Testimonials.astro';
+import FAQ from '../components/FAQ.astro';
+import ContactForm from '../components/ContactForm.jsx'; // Importar componente React
+import Footer from '../components/Footer.astro';
+
+// Puedes sobreescribir el título/descripción por defecto del layout si es necesario
+const pageTitle = 'Cancha360 | App de Fútbol Amateur en Ecuador - Organiza y Juega';
+const pageDescription = 'Descubre Cancha360, la aplicación líder para organizar partidos, encontrar equipos y seguir estadísticas de fútbol amateur en Ecuador. Regístrate gratis.';
+---
+<BaseLayout title={pageTitle} description={pageDescription}>
+    {/* <Header /> */} {/* Opcional si necesitas un header */}
+    <main>
+        <Hero />
+        <Benefits />
+        <!-- <DemoSection /> -->
+        <Testimonials />
+        <FAQ />
+        {/* Renderizar el componente React con directiva client: */}
+        {/* client:load = Carga JS inmediatamente */}
+        {/* client:visible = Carga JS cuando el componente es visible */}
+        <ContactForm client:visible />
+    </main>
+    <Footer />
+</BaseLayout>

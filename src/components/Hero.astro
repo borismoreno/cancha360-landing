@@ -1,0 +1,40 @@
+---
+// src/components/Hero.astro
+import Button from './ui/Button.astro';
+---
+<section class="relative bg-gradient-to-br from-green-600 to-teal-600 text-white pt-32 pb-20 overflow-hidden">
+    {/* Opcional: Imagen de fondo */}
+    <div class="absolute inset-0 opacity-10">
+         <img src="/images/hero-bg.webp" alt="Fondo abstracto de cancha de fútbol" class="object-cover w-full h-full" loading="eager" /> {/* Eager para LCP */}
+    </div>
+
+    <div class="container mx-auto px-6 text-center relative z-10">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight animate-fade-in-up">
+            Organiza y Vive el Fútbol Amateur Como Nunca Antes
+        </h1>
+        <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto opacity-90 animate-fade-in-up animation-delay-200">
+            Cancha360 es tu centro de mando para partidos, equipos y estadísticas en Ecuador. ¡Únete a la comunidad y eleva tu juego!
+        </p>
+        <div class="animate-fade-in-up animation-delay-400">
+            <Button href="#registro" variant="secondary" size="lg">
+                Regístrate Gratis Ahora
+            </Button>
+        </div>
+        {/* Opcional: Logos de tiendas de apps */}
+        <div class="mt-12 flex justify-center space-x-4 animate-fade-in-up animation-delay-600">
+            <a href="#" aria-label="Descargar en App Store"><img src="/images/app-store-badge.svg" alt="App Store" class="h-12"></a>
+            <a href="#" aria-label="Descargar en Google Play"><img src="/images/google-play-badge.svg" alt="Google Play" class="h-12"></a>
+        </div>
+    </div>
+     {/* Estilos simples para animación (puedes moverlos a global.css) */}
+     <style>
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; opacity: 0; }
+        .animation-delay-200 { animation-delay: 0.2s; }
+        .animation-delay-400 { animation-delay: 0.4s; }
+        .animation-delay-600 { animation-delay: 0.6s; }
+     </style>
+</section>

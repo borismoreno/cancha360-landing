@@ -1,0 +1,6 @@
+# public/robots.txt
+User-agent: *
+Allow: /
+Disallow: /api/ # Si tienes alguna ruta API que no quieres indexar
+
+Sitemap: https://www.cancha360.com/sitemap.xml # Asegúrate que coincida con tu 'site' en astro.config.mjs
