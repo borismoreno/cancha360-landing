@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 // Reemplaza esto con tu endpoint REAL de AWS Lambda
 // const LAMBDA_ENDPOINT = 'api/prod/subscriber'; // ¡¡¡CAMBIAR ESTO!!!
 // const LAMBDA_ENDPOINT = 'http://localhost:3000/dev/subscriber'; // ¡¡¡CAMBIAR ESTO!!!
-const LAMBDA_ENDPOINT = 'https://o5pu7k2pie.execute-api.us-east-1.amazonaws.com/prod/subscriber'; // ¡¡¡CAMBIAR ESTO!!!
+const LAMBDA_ENDPOINT = 'https://api.cancha360.com/subscriber'; // ¡¡¡CAMBIAR ESTO!!!
 
 // Regex simple para validación de email
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
